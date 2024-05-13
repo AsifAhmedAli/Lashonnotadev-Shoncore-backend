@@ -53,9 +53,6 @@ var deleteUsers = async (req,res) =>{
     res.status(200).json({data:data});
 }
 
-
-
-
 module.exports = {
     addUser,
     getUsers,

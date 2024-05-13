@@ -15,14 +15,13 @@ require('./models');
 // });
 //********************************USERS*************************************************** */
 
-app.get('/add' ,userCtrl.addUser )
+app.get('/add' ,userCtrl.addUser ) // manually
 //api route
 app.get('/users' ,userCtrl.getUsers )
 // for id
 app.get('/users/:id' ,userCtrl.getUser )
 // for post
 app.post('/users2' ,userCtrl.postUsers )
-
 // for delete
 app.delete('/users/:id' ,userCtrl.deleteUsers )
 
