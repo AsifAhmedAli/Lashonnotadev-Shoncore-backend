@@ -12,7 +12,7 @@ User.init(
     },
     lastName: {
       type: DataTypes.STRING,
-      // allowNull defaults to true
+      defaultValue: 'Hassan'
     },
   },
   {

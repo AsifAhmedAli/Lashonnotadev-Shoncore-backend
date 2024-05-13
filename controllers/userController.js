@@ -31,15 +31,35 @@ var getUser = async (req,res) =>{
 }
 
 //post users
-var postUsers = async (req,res) =>{
-    var postData =  req.body;
-    const data = await User.create(postData);
+var postUsers = async (req, res) => {
+    try {
+        var postData = req.body;
+        var data = await User.create(postData);
+        res.status(200).json({ data: data });
+    } catch (error) {
+        console.error('Error creating user:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+};
+
+
+// for delete 
+var deleteUsers = async (req,res) =>{
+    const data = await User.destroy({
+        where:{
+            id:req.params.id
+        }
+      });
     res.status(200).json({data:data});
 }
+
+
+
 
 module.exports = {
     addUser,
     getUsers,
     getUser,
-    postUsers
+    postUsers,
+    deleteUsers
 }

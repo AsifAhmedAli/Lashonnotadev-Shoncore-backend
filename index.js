@@ -13,7 +13,7 @@ require('./models');
 // router.get('/', function(req, res, next) {
 //   res.send('respond with a resource');
 // });
-
+//********************************USERS*************************************************** */
 
 app.get('/add' ,userCtrl.addUser )
 //api route
@@ -21,7 +21,10 @@ app.get('/users' ,userCtrl.getUsers )
 // for id
 app.get('/users/:id' ,userCtrl.getUser )
 // for post
-// app.post('/users' ,userCtrl.postUsers )
+app.post('/users2' ,userCtrl.postUsers )
+
+// for delete
+app.delete('/users/:id' ,userCtrl.deleteUsers )
 
 
 // mail
