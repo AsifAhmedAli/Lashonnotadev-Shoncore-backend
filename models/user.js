@@ -1,8 +1,9 @@
-const {DataTypes } = require('sequelize');
-const sequelize = require('./db') // db connection
+module.exports = (sequelize ,DataTypes , Model) =>{
 
-const User = sequelize.define(
-  'User',
+
+class User extends Model {}
+
+User.init(
   {
     // Model attributes are defined here
     firstName: {
@@ -16,11 +17,61 @@ const User = sequelize.define(
   },
   {
     // Other model options go here
-    tableName: 'users'
+    sequelize, // We need to pass the connection instance
+    modelName: 'User', // We need to choose the model name
   },
 );
 
-// `sequelize.define` also returns the model
-console.log(User === sequelize.models.User); // true
 
-module.exports=User
+return User;
+
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// const {DataTypes } = require('sequelize');
+// const sequelize = require('.') // db connection
+
+// const User = sequelize.define(
+//   'User',
+//   {
+//     // Model attributes are defined here
+//     first_name: {
+//       type: DataTypes.STRING,
+//       allowNull: false,
+//     },
+//     last_name: {
+//       type: DataTypes.STRING,
+//       // allowNull defaults to true
+//     },
+//     // email: { type: DataTypes.STRING, allowNull: false },
+//     // // country: { type: DataTypes.STRING, allowNull: false },
+//     // password: { type: DataTypes.STRING },
+//   },
+  
+//   {
+//     // Other model options go here
+//     tableName: 'users'
+//   },
+// );
+
+// // `sequelize.define` also returns the model
+// console.log(User === sequelize.models.User); // true
+
+// module.exports=User

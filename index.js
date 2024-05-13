@@ -1,23 +1,33 @@
 const express = require('express');
 const app = express();
 const port = 3000;
-const User = require('./models/user')
-
-const sendEmail = require("./controllers/sendEmail"); //mail route
-
-
-
-app.get('/', (req, res) => {
-  res.send('Hello World!');
-});
+// const User = require('./models/user')
+// const jwt = require('jsonwebtoken');
+// const bcrypt = require("bcrypt");
+// var router = express.Router();
+var userCtrl = require('./controllers/userController')
+// const sendEmail = require("./controllers/sendEmail"); //mail route
+require('./models');
 
 
-User.sync({force: true})
+// router.get('/', function(req, res, next) {
+//   res.send('respond with a resource');
+// });
+
+
+app.get('/add' ,userCtrl.addUser )
+//api route
+app.get('/users' ,userCtrl.getUsers )
+// for id
+app.get('/users/:id' ,userCtrl.getUser )
+// for post
+// app.post('/users' ,userCtrl.postUsers )
 
 
 // mail
-app.get("/mail",sendEmail) ;
+// app.get("/mail",sendEmail) ;
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
+
