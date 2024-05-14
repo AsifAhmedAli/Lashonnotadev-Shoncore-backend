@@ -8,7 +8,9 @@ const port = 3000;
 var userCtrl = require('./controllers/userController')
 // const sendEmail = require("./controllers/sendEmail"); //mail route
 require('./models');
-app.use(express.json());
+// app.use(express.json());
+var bodyParser = require('body-parser')
+app.use(bodyParser.json());
 
 
 //********************************USERS*************************************************** */
@@ -22,7 +24,10 @@ app.get('/users/:id' ,userCtrl.getUser )
 app.post('/users' ,userCtrl.postUsers )
 // for delete
 app.delete('/users/:id' ,userCtrl.deleteUsers )
-
+// for update specific data
+app.patch('/users/:id' ,userCtrl.patchUsers )
+// for check if not exixt in db they update data
+app.put('/users/:id' ,userCtrl.putUser )
 
 // mail
 // app.get("/mail",sendEmail) ;
