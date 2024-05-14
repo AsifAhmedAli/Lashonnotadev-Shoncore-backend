@@ -19,7 +19,7 @@ app.get('/users' ,userCtrl.getUsers )
 // for id
 app.get('/users/:id' ,userCtrl.getUser )
 // for post
-app.post('/users2' ,userCtrl.postUsers )
+app.post('/users' ,userCtrl.postUsers )
 // for delete
 app.delete('/users/:id' ,userCtrl.deleteUsers )
 
