@@ -4,7 +4,7 @@ var User = db.user;
 
 var addUser = async (req, res) => {
 
-    const jane = await User.create({ firstName: 'Umair' ,lastName: 'Ul Hassan' });
+    const jane = await User.create({ firstName: 'UmairNewOne' ,lastName: 'Ul HassanNewOne' });
     // const jane = User.build({ firstName: 'Jane12' ,lastName: 'Jane3214' });
     console.log(jane instanceof User); // true
     console.log(jane.firstName); // "Jane" 

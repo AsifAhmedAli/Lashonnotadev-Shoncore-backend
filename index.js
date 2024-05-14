@@ -8,11 +8,9 @@ const port = 3000;
 var userCtrl = require('./controllers/userController')
 // const sendEmail = require("./controllers/sendEmail"); //mail route
 require('./models');
+app.use(express.json());
 
 
-// router.get('/', function(req, res, next) {
-//   res.send('respond with a resource');
-// });
 //********************************USERS*************************************************** */
 
 app.get('/add' ,userCtrl.addUser ) // manually
