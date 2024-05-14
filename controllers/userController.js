@@ -8,7 +8,7 @@ var addUser = async (req, res) => {
     // const jane = User.build({ firstName: 'Jane12' ,lastName: 'Jane3214' });
     console.log(jane instanceof User); // true
     console.log(jane.firstName); // "Jane" 
-    // await jane.save();
+    // await jane.save(); 
     console.log("Jane was saved"); // This is good!
     console.log(jane.toJSON()); // This is also good!
     res.status(200).json(jane.toJSON()); // Here, you need to pass data to the json method
