@@ -9,7 +9,7 @@ const {Sequelize, Model, DataTypes} = require('sequelize');
 //     database: "test"
 //   });
 //Sequelize connection to database
-  const sequelize = new Sequelize('test', 'root', 'Umair@1122', {
+  const sequelize = new Sequelize('test', 'root', 'Umair@1122', { 
     host: 'localhost',
     logging: false,
     dialect: 'mysql'
@@ -22,7 +22,7 @@ const {Sequelize, Model, DataTypes} = require('sequelize');
   } catch (error) {
     console.error('Unable to connect to the database:', error);
   }
-
+ 
 const db = {} ;
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;

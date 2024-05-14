@@ -4,7 +4,7 @@ const port = 3000;
 // const User = require('./models/user')
 // const jwt = require('jsonwebtoken');
 // const bcrypt = require("bcrypt");
-// var router = express.Router();
+// var router = express.Router(); 
 var userCtrl = require('./controllers/userController')
 // const sendEmail = require("./controllers/sendEmail"); //mail route
 require('./models');
