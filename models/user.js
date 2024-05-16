@@ -1,19 +1,29 @@
-module.exports = (sequelize ,DataTypes , Model) =>{
-
+module.exports = (sequelize ,DataTypes , Model  ) =>{
+  const { USER_ROLE } = require('./utils');
 
 class User extends Model {}
 
 User.init(
   {
     // Model attributes are defined here
-    firstName: {
+    name: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    lastName: {
-      type: DataTypes.STRING,
-      defaultValue: 'Hassan'
-    },
+  
+    role: { type: DataTypes.STRING, defaultValue: USER_ROLE.User, allowNull: false },
+    // id: { type: DataTypes.UUID, defaultValue: UUIDV4, allowNull: false, primaryKey: true },
+    email: { type: DataTypes.STRING, allowNull: false },
+    // hash: { type: DataTypes.STRING, allowNull: false },
+    // country: { type: DataTypes.STRING, allowNull: false },
+    // verified: { type: DataTypes.DATE },
+    // verificationToken: { type: DataTypes.STRING, allowNull: true },
+    // resetToken: { type: DataTypes.STRING },
+    // resetTokenExpires: { type: DataTypes.DATE },
+    // passwordReset: { type: DataTypes.DATE },
+    // username: { type: DataTypes.STRING, allowNull: false },
+    password: { type: DataTypes.STRING, allowNull: false },
+    confirmPassword: { type: DataTypes.STRING },
   },
   {
     // Other model options go here
