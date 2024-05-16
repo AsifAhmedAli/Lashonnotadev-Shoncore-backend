@@ -6,6 +6,10 @@ const app = express();
 // var router = express.Router();
 var userCtrl = require("./controllers/userController");
 const Users = require("./routes/userRoutes");
+const News = require("./routes/newsRoutes");
+const Products = require("./routes/productRoutes");
+const Order = require("./routes/orderRoute");
+const Payment = require("./routes/payment");
 const dotenv = require("dotenv");
 dotenv.config({ path: "../Lashonnotadev-Shoncore/config/config.env" });
 // const sendEmail = require("./controllers/sendEmail"); //mail route
@@ -16,23 +20,11 @@ app.use(bodyParser.json());
 
 //********************************USERS*************************************************** */
 
-// app.get("/add", userCtrl.addUser); // manually
-//api route
-// app.get("/users", userCtrl.getUsers);
-// for id
-// app.get("/users/:id", userCtrl.getUser);
-// for post
-// app.post("/users", userCtrl.postUsers);
-// for delete
-// app.delete("/users/:id", userCtrl.deleteUsers);
-// for update specific data
-// app.patch("/users/:id", userCtrl.patchUsers);
-// for check if not exixt in db they update data
-// app.put("/users/:id", userCtrl.putUser);
 app.use("/api/v1", Users);
-
-// mail
-// app.get("/mail",sendEmail) ;
+app.use("/api/v1", News);
+app.use("/api/v1", Products);
+app.use("/api/v1", Order);
+app.use("/api/v1", Payment);
 
 app.listen(process.env.PORT, () => {
   console.log(`Example app listening at http://localhost:${process.env.PORT}`);

@@ -20,6 +20,9 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 db.user = require("./user")(sequelize, DataTypes, Model);
+db.news = require("./newsModel")(sequelize, DataTypes, Model);
+db.products = require("./productModel")(sequelize, DataTypes, Model);
+db.orders = require("./orderModel")(sequelize, DataTypes, Model);
 db.sequelize.sync({ force: false });
 
 module.exports = db;
