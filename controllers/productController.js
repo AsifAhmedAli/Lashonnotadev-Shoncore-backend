@@ -15,6 +15,7 @@ const upload = multer({
 
 // add Product
 exports.CreateProduct = async (req, res) => {
+  let user = req.user.id;
   upload(req, res, async (err) => {
     if (err) {
       return res.status(500).json({
@@ -35,6 +36,7 @@ exports.CreateProduct = async (req, res) => {
 
     // Create Product object with image file data
     const ProductData = {
+      productowner: user,
       Name,
       Description,
       stock,
@@ -65,6 +67,34 @@ exports.CreateProduct = async (req, res) => {
 // get all Product
 exports.Product = async (req, res) => {
   await Product.findAll()
+    .then((result) => {
+      if (!result) {
+        return res.status(404).json({
+          success: false,
+          message: "Product not found",
+        });
+      }
+      return res.status(200).json({
+        success: true,
+        result: result,
+      });
+    })
+    .catch((err) => {
+      if (err.name === "CastError") {
+        return res.status(400).json({
+          message: "Resource not found",
+        });
+      }
+      return res.status(500).json({
+        message: err.message,
+      });
+    });
+};
+
+// get owner products
+exports.ownerProduct = async (req, res) => {
+  let user = req.user.id;
+  await Product.findAll({ where: { productowner: user } })
     .then((result) => {
       if (!result) {
         return res.status(404).json({
@@ -193,7 +223,7 @@ exports.deleteProduct = async (req, res) => {
       if (!result) {
         return res.status(404).json({
           success: false,
-          message: "An error occurred while deleting the Product.",
+          message: "no product found with this id",
         });
       }
       return res.status(200).json({

@@ -3,6 +3,10 @@ module.exports = (sequelize, DataTypes, Model) => {
 
   Product.init(
     {
+      productowner: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
       Name: {
         type: DataTypes.STRING,
         allowNull: false,

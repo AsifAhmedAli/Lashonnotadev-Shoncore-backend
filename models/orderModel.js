@@ -3,6 +3,10 @@ module.exports = (sequelize, DataTypes, Model) => {
 
   Order.init(
     {
+      userorder: {
+        type: DataTypes.INTEGER,
+        allownull: false,
+      },
       city: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -71,9 +75,9 @@ module.exports = (sequelize, DataTypes, Model) => {
         allowNull: false,
       },
       productItems: {
-        type: DataTypes.JSON, 
+        type: DataTypes.JSON,
         allowNull: false,
-        defaultValue: [], 
+        defaultValue: [],
       },
     },
     {
@@ -81,7 +85,6 @@ module.exports = (sequelize, DataTypes, Model) => {
       modelName: "Order",
     }
   );
-  
 
   return Order;
 };

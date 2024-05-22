@@ -21,7 +21,9 @@ exports.CreateOrder = async (req, res, next) => {
   //   const userId = req.user.id; // Assuming you have user authentication middleware
 
   // Create the order
+  let user = req.user.id;
   const order = await Order.create({
+    userorder: user,
     city,
     state,
     country,
