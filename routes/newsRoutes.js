@@ -6,8 +6,6 @@ const router = require("express").Router();
 router.get("/allnews", NewsController.News);
 router.post(
   "/createnews",
-  isAuthenticated,
-  AuthenticatedRoles("admin"),
   NewsController.CreateNews
 );
 router.get("/newsdetail/:id", NewsController.newsDetail);

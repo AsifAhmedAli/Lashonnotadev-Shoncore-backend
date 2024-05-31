@@ -3,7 +3,7 @@ const dotenv = require("dotenv");
 dotenv.config({ path: "../Lashonnotadev-Shoncore/config/config.env" });
 
 //Sequelize connection to database
-const sequelize = new Sequelize(process.env.DATABASE, process.env.USER, "", {
+const sequelize = new Sequelize(process.env.DATABASE, process.env.USER, process.env.PASSWORD, {
   host: process.env.HOST,
   logging: false,
   dialect: "mysql",

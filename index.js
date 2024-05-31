@@ -11,12 +11,16 @@ const Products = require("./routes/productRoutes");
 const Order = require("./routes/orderRoute");
 const Payment = require("./routes/payment");
 const dotenv = require("dotenv");
+const cors = require("cors");
 const cookieParser = require("cookie-parser");
 dotenv.config({ path: "../Lashonnotadev-Shoncore/config/config.env" });
+
 // const sendEmail = require("./controllers/sendEmail"); //mail route
 require("./models");
 // app.use(express.json());
+
 var bodyParser = require("body-parser");
+app.use(cors());
 app.use(bodyParser.json());
 app.use(cookieParser());
 

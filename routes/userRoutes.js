@@ -22,7 +22,7 @@ router.delete("/delete/:id", isAuthenticated, userController.deleteUsers);
 router.post("/password/reset/:token", userController.resetPassword);
 router.get("/verify/:id", userController.verifyEmail);
 router.get("/logout", userController.logout);
-
+router.put("/change-password", isAuthenticated, userController.changePassword);
 module.exports = router;
 
 // for login validation

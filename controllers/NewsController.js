@@ -1,25 +1,20 @@
 var db = require("../models");
 var News = db.news;
+const cloudinary = require('../models/cloudinaryConfig');
+// const { CloudinaryStorage } = require('multer-storage-cloudinary');
 const multer = require("multer");
 
-const Storage = multer.diskStorage({
-  destination: "uploads/News",
-  filename: (req, file, cb) => {
-    cb(null, file.originalname);
-  },
-});
+// Set up multer to store files in memory
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage }).single('testImage');
 
-const upload = multer({
-  storage: Storage,
-}).single("testImage");
-
-// add News
+// Add News
 exports.CreateNews = async (req, res) => {
   upload(req, res, async (err) => {
     if (err) {
       return res.status(500).json({
         success: false,
-        message: "Error uploading image: " + err.message,
+        message: 'Error uploading image: ' + err.message
       });
     }
 
@@ -29,37 +24,108 @@ exports.CreateNews = async (req, res) => {
     if (!req.file) {
       return res.status(400).json({
         success: false,
-        message: "Image file is required.",
+        message: 'Image file is required.'
       });
     }
 
-    // Create news object with image file data
-    const newsData = {
-      Title,
-      Description,
-      Image: {
-        data: req.file.filename,
-        contentType: req.file.mimetype,
-      },
-    };
-    try {
-      const result = await News.create(newsData);
-      return res.status(200).json({
-        success: true,
-        message: "The news was created successfully",
-      });
-    } catch (err) {
-      if (err.name === "SequelizeValidationError") {
-        return res.status(400).json({
-          message: "Validation error: " + err.message,
+    // Upload the image to Cloudinary
+    cloudinary.uploader.upload_stream({ folder: 'NewsImages' }, async (error, result) => {
+      if (error) {
+        return res.status(500).json({
+          success: false,
+          message: 'Error uploading to Cloudinary: ' + error.message
         });
       }
-      return res.status(500).json({
-        message: err.message,
-      });
-    }
+
+      // Create News object with image file data
+      const newsData = {
+        Title,
+        Description,
+        Image: {
+          url: result.secure_url,
+          public_id: result.public_id
+        }
+      };
+
+      try {
+        const newNews = await News.create(newsData);
+        return res.status(200).json({
+          success: true,
+          message: 'The News was created successfully',
+          news: newNews
+        });
+      } catch (err) {
+        if (err.name === 'SequelizeValidationError') {
+          return res.status(400).json({
+            message: 'Validation error: ' + err.message
+          });
+        }
+        return res.status(500).json({
+          message: err.message
+        });
+      }
+    }).end(req.file.buffer); // Stream the file buffer to Cloudinary
   });
 };
+
+// const Storage = multer.diskStorage({
+//   destination: "uploads/News",
+//   filename: (req, file, cb) => {
+//     cb(null, file.originalname);
+//   },
+// });
+
+// const upload = multer({
+//   storage: Storage,
+// }).single("testImage");
+
+// // add News
+// exports.CreateNews = async (req, res) => {
+//   upload(req, res, async (err) => {
+//     if (err) {
+//       return res.status(500).json({
+//         success: false,
+//         message: "Error uploading image: " + err.message,
+//       });
+//     }
+
+//     const { Title, Description } = req.body;
+
+//     // Check if the image file is uploaded
+//     if (!req.file) {
+//       return res.status(400).json({
+//         success: false,
+//         message: "Image file is required.",
+//       });
+//     }
+
+//     // Create news object with image file data
+//     const newsData = {
+//       Title,
+//       Description,
+//       Image: {
+//         data: req.file.filename,
+//         contentType: req.file.mimetype,
+//       },
+//     };
+//     try {
+//       const result = await News.create(newsData);
+//       return res.status(200).json({
+//         success: true,
+//         message: "The news was created successfully",
+//       });
+//     } catch (err) {
+//       if (err.name === "SequelizeValidationError") {
+//         return res.status(400).json({
+//           message: "Validation error: " + err.message,
+//         });
+//       }
+//       return res.status(500).json({
+//         message: err.message,
+//       });
+//     }
+//   });
+// };
 
 // get all news
 exports.News = async (req, res) => {

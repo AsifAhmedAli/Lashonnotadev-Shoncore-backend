@@ -8,7 +8,7 @@ router.get("/allProduct", ProductController.Product);
 router.post(
   "/createProduct",
   isAuthenticated,
-  AuthenticatedRoles("admin"),
+  // AuthenticatedRoles("admin"),
   ProductController.CreateProduct
 );
 router.get("/Productdetail/:id", ProductController.ProductDetail);
