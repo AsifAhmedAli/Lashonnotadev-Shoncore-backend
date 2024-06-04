@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes, Model) => {
         allowNull: false,
       },
       Name: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: true,
       },
       Description: {

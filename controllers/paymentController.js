@@ -20,3 +20,60 @@ exports.payments = async (req, res) => {
       .json({ error: "An error occurred while creating payment intent." });
   }
 };
+ // for testing   
+exports.createCustomer = async (req, res) => {
+  try {
+    const { name, email } = req.body;
+
+    const customer = await stripe.customers.create({
+      name,
+      email,
+    });
+
+    return res.status(200).json({
+      success: true,
+      customer,
+    });
+  } catch (error) {
+    console.error('Error creating customer:', error.message);
+    return res.status(400).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+// add card info 
+
+exports.addNewCard = async (req, res) => {
+  try {
+    const {
+      customer_id,
+      card_Name,
+      card_ExpYear,
+      card_ExpMonth,
+      card_Number,
+      card_CVC,
+    } = req.body;
+
+    const card_token = await stripe.tokens.create({
+      card: {
+        name: card_Name,
+        number: card_Number,
+        exp_year: card_ExpYear,
+        exp_month: card_ExpMonth,
+        cvc: card_CVC
+      }
+    });
+
+    const card = await stripe.customers.createSource(customer_id, {
+      source: `${card_token.id}`
+    });
+
+    return res.status(200).json({ card: card.id });
+
+  } catch (error) {
+    console.error('Error adding new card:', error.message);
+    return res.status(400).json({ success: false, msg: error.message });
+  }
+};
