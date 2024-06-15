@@ -8,5 +8,5 @@ router.post("/AddstripUser", paymentController.createCustomer);
 
 router.post("/Addcardinfo", paymentController.addNewCard);
 
-
+router.post("/create-checkout-session", paymentController.checkout);
 module.exports = router;

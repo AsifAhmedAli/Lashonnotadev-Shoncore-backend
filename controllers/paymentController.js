@@ -77,3 +77,29 @@ exports.addNewCard = async (req, res) => {
     return res.status(400).json({ success: false, msg: error.message });
   }
 };
+// chat gpt //////////////
+
+exports.checkout = async (req, res) => {
+  const cart = req.body.cart;
+  const lineItems = cart.map(item => ({
+      price_data: {
+          currency: 'usd',
+          product_data: {
+              name: item.Name,
+              // images: [item.Image.url], // Optional
+          },
+          unit_amount: item.Price * 100, // Stripe expects amount in cents
+      },
+      quantity: 1,
+  }));
+
+  const session = await stripe.checkout.sessions.create({
+      payment_method_types: ['card'],
+      line_items: lineItems,
+      mode: 'payment',
+      success_url: 'http://127.0.0.1:5503/News.html',
+      cancel_url: 'https://your-domain.com/cancel',
+  });
+
+  res.json({ id: session.id });
+};

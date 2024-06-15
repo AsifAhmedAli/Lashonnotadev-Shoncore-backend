@@ -20,7 +20,14 @@ require("./models");
 // app.use(express.json());
 
 var bodyParser = require("body-parser");
-app.use(cors());
+// app.use(cors());
+const corsOptions = {
+  origin: 'http://127.0.0.1:5503',
+  credentials: true, // Allow credentials
+  optionsSuccessStatus: 200 // Some legacy browsers choke on 204
+};
+app.use(cors(corsOptions));
+
 app.use(bodyParser.json());
 app.use(cookieParser());
 

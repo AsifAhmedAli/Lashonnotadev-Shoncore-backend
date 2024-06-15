@@ -9,7 +9,11 @@ module.exports = (sequelize, DataTypes, Model) => {
       },
       Name: {
         type: DataTypes.TEXT,
-        allowNull: true,
+        allowNull: false,
+      },
+      Price: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
       },
       Description: {
         type: DataTypes.TEXT,

@@ -6,65 +6,125 @@ const storage = multer.memoryStorage(); // Store files in memory
 const upload = multer({ storage: storage }).single('testImage');
 
 // Add Product
+// exports.CreateProduct = async (req, res) => {
+//   let user = req.user.id;
+//   upload(req, res, async (err) => {
+//     if (err) {
+//       return res.status(500).json({
+//         success: false,
+//         message: 'Error uploading image: ' + err.message
+//       });
+//     }
+
+//     const { name, Description, stock } = req.body;
+// // console.log("This is name " ,  Name)
+//     // Check if the image file is uploaded
+//     if (!req.file) {
+//       return res.status(400).json({
+//         success: false,
+//         message: 'Image file is required.'
+//       });
+//     }
+
+//     // Upload the image to Cloudinary
+//     cloudinary.uploader.upload_stream({ folder: 'ProductImages' }, async (error, result) => {
+//       if (error) {
+//         return res.status(500).json({
+//           success: false,
+//           message: 'Error uploading to Cloudinary: ' + error.message
+//         });
+//       }
+
+//       // Create Product object with image file data
+//       const ProductData = {
+//         productowner: user,
+//         name,
+//         Description,
+//         stock,
+//         Image: {
+//           url: result.secure_url,
+//           public_id: result.public_id
+//         }
+//       };
+
+//       try {
+//         const newProduct = await Product.create(ProductData);
+//         return res.status(200).json({
+//           success: true,
+//           message: 'The Product was created successfully',
+//           product: newProduct
+//         });
+//       } catch (err) {
+//         if (err.name === 'SequelizeValidationError') {
+//           return res.status(400).json({
+//             message: 'Validation error: ' + err.message
+//           });
+//         }
+//         return res.status(500).json({
+//           message: err.message
+//         });
+//       }
+//     }).end(req.file.buffer);
+//   });
+// };
+
 exports.CreateProduct = async (req, res) => {
   let user = req.user.id;
   upload(req, res, async (err) => {
     if (err) {
       return res.status(500).json({
         success: false,
-        message: 'Error uploading image: ' + err.message
+        message: "Error uploading image: " + err.message,
       });
     }
-
-    const { Name, Description, stock } = req.body;
-
+    const { Name, Price, Description, stock } = req.body;
     // Check if the image file is uploaded
     if (!req.file) {
       return res.status(400).json({
         success: false,
-        message: 'Image file is required.'
+        message: "Image file is required.",
       });
     }
-
     // Upload the image to Cloudinary
-    cloudinary.uploader.upload_stream({ folder: 'ProductImages' }, async (error, result) => {
-      if (error) {
-        return res.status(500).json({
-          success: false,
-          message: 'Error uploading to Cloudinary: ' + error.message
-        });
-      }
-
-      // Create Product object with image file data
-      const ProductData = {
-        productowner: user,
-        Name,
-        Description,
-        stock,
-        Image: {
-          url: result.secure_url,
-          public_id: result.public_id
-        }
-      };
-
-      try {
-        const newProduct = await Product.create(ProductData);
-        return res.status(200).json({
-          success: true,
-          message: 'The Product was created successfully',
-          product: newProduct
-        });
-      } catch (err) {
-        if (err.name === 'SequelizeValidationError') {
-          return res.status(400).json({
-            message: 'Validation error: ' + err.message
+    cloudinary.uploader
+      .upload_stream({ folder: "ProductImages" }, async (error, result) => {
+        if (error) {
+          return res.status(500).json({
+            success: false,
+            message: "Error uploading to Cloudinary: " + error.message,
           });
         }
-        return res.status(500).json({
-          message: err.message
-        });
-      }
-    }).end(req.file.buffer);
+        // Create Product object with image file data
+        const ProductData = {
+          productowner: user,
+          Name,
+          Price,
+          Description,
+          stock,
+          Image: {
+            url: result.secure_url,
+            public_id: result.public_id,
+          },
+        };
+        try {
+          const newProduct = await Product.create(ProductData);
+          return res.status(200).json({
+            success: true,
+            message: "The Product was created successfully",
+            product: newProduct,
+          });
+        } catch (err) {
+          if (err.name === "SequelizeValidationError") {
+            return res.status(400).json({
+              message: "Validation error: " + err.message,
+            });
+          }
+          return res.status(500).json({
+            message: err.message,
+          });
+        }
+      })
+      .end(req.file.buffer);
   });
 };
 // const multer = require("multer");
