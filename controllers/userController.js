@@ -141,6 +141,7 @@ exports.register = async (req, res) => {
                   httpOnly: true,
                 })
                 .json({
+                  success : true,
                   message: `User registered successfully please verify yout email at : ${req.body.email}`,
                   users,
                 });
@@ -170,15 +171,24 @@ exports.login = async (req, res) => {
 
     if (!user) {
       return res.status(401).json({
-        message: "Invalid email or password",
+        message: "Enter Email & Password",
       });
     }
 
+
+
+if (user.verified == 0 ){
+
+  return res.status(400).json({ message: "You are not verified yet. Please confirm your Email first"})
+}
+
     const isMatch = await bcrypt.compare(req.body.password, user.password);
+
+
 
     if (!isMatch) {
       return res.status(401).json({
-        message: "Invalid email or password",
+        message: "Invalid email or password ",
       });
     }
 

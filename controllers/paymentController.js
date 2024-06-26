@@ -97,8 +97,8 @@ exports.checkout = async (req, res) => {
       payment_method_types: ['card'],
       line_items: lineItems,
       mode: 'payment',
-      success_url: 'http://127.0.0.1:5503/News.html',
-      cancel_url: 'https://your-domain.com/cancel',
+      success_url: 'http://127.0.0.1:5503/PaymentSuccess.html',
+      cancel_url: 'http://127.0.0.1:5503/cart.html',
   });
 
   res.json({ id: session.id });
